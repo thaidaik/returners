@@ -27,11 +27,6 @@
            
             $attributes = array('class' => 'form-inline reset-margin', 'id' => 'myform');
            
-            $options_manufacture = array(0 => "all");
-            foreach ($manufactures as $row)
-            {
-              $options_manufacture[$row['id']] = $row['name'];
-            }
             //save the columns names in a array that we will use as filter         
             $options_characters = array();    
             foreach ($characters as $array) {
@@ -46,8 +41,6 @@
               echo form_label('Search:', 'search_string');
               echo form_input('search_string', $search_string_selected, 'style="width: 170px; height: 26px;"');
 
-              echo form_label('Filter by manufacturer:', 'manufacture_id');
-              echo form_dropdown('manufacture_id', $options_manufacture, $manufacture_selected, 'class="span2"');
 
               echo form_label('Order by:', 'order');
               echo form_dropdown('order', $options_characters, $order, 'class="span2"');
@@ -68,11 +61,10 @@
             <thead>
               <tr>
                 <th class="header">#</th>
-                <th class="yellow header headerSortDown">Description</th>
-                <th class="green header">Stock</th>
-                <th class="red header">Cost Price</th>
-                <th class="red header">Sell Price</th>
-                <th class="red header">Manufacture</th>
+                <th class="yellow header headerSortDown">name</th>
+                <th class="green header">image</th>
+                <th class="red header">info</th>
+                <th class="red header">status</th>
                 <th class="red header">Actions</th>
               </tr>
             </thead>
@@ -82,13 +74,12 @@
               {
                 echo '<tr>';
                 echo '<td>'.$row['id'].'</td>';
-                echo '<td>'.$row['description'].'</td>';
-                echo '<td>'.$row['stock'].'</td>';
-                echo '<td>'.$row['cost_price'].'</td>';
-                echo '<td>'.$row['sell_price'].'</td>';
-                echo '<td>'.$row['manufacture_name'].'</td>';
+                echo '<td>'.$row['name'].'</td>';
+                echo '<td>'.$row['image'].'</td>';
+                echo '<td>'.$row['info'].'</td>';
+                echo '<td>'.$row['status'].'</td>';
                 echo '<td class="crud-actions">
-                  <a href="'.site_url("admin").'/characters/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  
+                  <a href="'.site_url("admin").'/characters/update/'.$row['id'].'" class="btn btn-info">edit</a>  
                   <a href="'.site_url("admin").'/characters/delete/'.$row['id'].'" class="btn btn-danger">delete</a>
                 </td>';
                 echo '</tr>';

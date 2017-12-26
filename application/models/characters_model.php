@@ -53,18 +53,33 @@ class Characters_model extends CI_Model {
 			$this->db->like('characters.name', $search_string);
 		}
 
-		$this->db->join('stories', 'characters.id = stories.character_id', 'left');
+		//$this->db->join('stories', 'characters.id = stories.character_id', 'left');
 		$this->db->group_by('characters.id');
 
 		if($order){
 			$this->db->order_by($order, $order_type);
 		}else{
-		    $this->db->order_by('id', $order_type);
+		    $this->db->order_by('name', $order_type);
 		}
 		$this->db->limit($limit_start, $limit_end);
 		//$this->db->limit('4', '4');
 		$query = $this->db->get();
 		
+		return $query->result_array(); 	
+    }
+    public function get_all_characters($array_id = null)
+    {
+		/* $ids = array();
+		foreach ($query->result_array() as $id){
+			$ids[] = $id['id'];
+		} */
+		$this->db->select('*');
+		$this->db->from('characters');
+		if($array_id != null){
+			$this->db->where_in('id', $array_id);
+		}
+		$this->db->order_by('id', 'asc');
+		$query = $this->db->get();
 		return $query->result_array(); 	
     }
 
@@ -88,7 +103,7 @@ class Characters_model extends CI_Model {
 		if($order){
 			$this->db->order_by($order, 'Asc');
 		}else{
-		    $this->db->order_by('id', 'Asc');
+		    $this->db->order_by('name', 'desc');
 		}
 		$query = $this->db->get();
 		return $query->num_rows();        

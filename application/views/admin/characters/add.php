@@ -45,11 +45,6 @@
       <?php
       //form data
       $attributes = array('class' => 'form-horizontal', 'id' => '');
-      $options_manufacture = array('' => "Select");
-      foreach ($manufactures as $row)
-      {
-        $options_manufacture[$row['id']] = $row['name'];
-      }
 
       //form validation
       echo validation_errors();
@@ -90,31 +85,31 @@
 			<div class="control-group">
 				<label for="inputError" class="control-label">HP Story</label>
 				<div class="controls">
-					<label class="checkbox inline"><input name="hp_1" type="checkbox" value="HP 1">HP 1</label>
-					<label class="checkbox inline"><input name="hp_2" type="checkbox" value="HP 2">HP 2</label>
-					<label class="checkbox inline"><input name="hp_3" type="checkbox" value="HP 3">HP 3</label>
-					<label class="checkbox inline"><input name="hp_4" type="checkbox" value="HP 4">HP 4</label>
-					<label class="checkbox inline"><input name="hp_5" type="checkbox" value="HP 5">HP 5</label>
+					<label class="checkbox inline"><input name="hp_1" type="checkbox" value="1">HP0 1</label>
+					<label class="checkbox inline"><input name="hp_2" type="checkbox" value="1">HP0 2</label>
+					<label class="checkbox inline"><input name="hp_3" type="checkbox" value="1">HP0 3</label>
+					<label class="checkbox inline"><input name="hp_4" type="checkbox" value="1">HP0 4</label>
+					<label class="checkbox inline"><input name="hp_5" type="checkbox" value="1">HP0 5</label>
 				</div>
 			</div>
 			<div class="control-group">
 				<label for="inputError" class="control-label">ATK Story</label>
 				<div class="controls">
-					<label class="checkbox inline"><input name="atk_1" type="checkbox" value="ATK 1">ATK 1</label>
-					<label class="checkbox inline"><input name="atk_2" type="checkbox" value="ATK 2">ATK 2</label>
-					<label class="checkbox inline"><input name="atk_3" type="checkbox" value="ATK 3">ATK 3</label>
-					<label class="checkbox inline"><input name="atk_4" type="checkbox" value="ATK 4">ATK 4</label>
-					<label class="checkbox inline"><input name="atk_5" type="checkbox" value="ATK 5">ATK 5</label>
+					<label class="checkbox inline"><input name="atk_1" type="checkbox" value="1">ATK 1</label>
+					<label class="checkbox inline"><input name="atk_2" type="checkbox" value="1">ATK 2</label>
+					<label class="checkbox inline"><input name="atk_3" type="checkbox" value="1">ATK 3</label>
+					<label class="checkbox inline"><input name="atk_4" type="checkbox" value="1">ATK 4</label>
+					<label class="checkbox inline"><input name="atk_5" type="checkbox" value="1">ATK 5</label>
 				</div>
 			</div>
 			<div class="control-group">
 				<label for="inputError" class="control-label">DEF Story</label>
 				<div class="controls">
-					<label class="checkbox inline"><input name="def_1" type="checkbox" value="DEF 1">DEF 1</label>
-					<label class="checkbox inline"><input name="def_2" type="checkbox" value="DEF 2">DEF 2</label>
-					<label class="checkbox inline"><input name="def_3" type="checkbox" value="DEF 3">DEF 3</label>
-					<label class="checkbox inline"><input name="def_4" type="checkbox" value="DEF 4">DEF 4</label>
-					<label class="checkbox inline"><input name="def_5" type="checkbox" value="DEF 5">DEF 5</label>
+					<label class="checkbox inline"><input name="def_1" type="checkbox" value="1">DEF 1</label>
+					<label class="checkbox inline"><input name="def_2" type="checkbox" value="1">DEF 2</label>
+					<label class="checkbox inline"><input name="def_3" type="checkbox" value="1">DEF 3</label>
+					<label class="checkbox inline"><input name="def_4" type="checkbox" value="1">DEF 4</label>
+					<label class="checkbox inline"><input name="def_5" type="checkbox" value="1">DEF 5</label>
 				</div>
 			</div>
 			
