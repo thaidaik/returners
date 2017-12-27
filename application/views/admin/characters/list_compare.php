@@ -41,6 +41,7 @@
             </thead>
             <tbody>
               <?php
+			  $i=1;
               foreach($characters as $row)
               {
                 echo '<tr>';
@@ -50,9 +51,14 @@
                 echo '<td>'.$row['info'].'</td>';
                 echo '<td>'.$row['status'].'</td>';
                 echo '<td class="crud-actions">
-					<label class="checkbox inline"><input name="list_compare[]" type="checkbox" value="'.$row['id'].'">Click to Select</label>
+					<label class="checkbox inline"><input ';
+				if($i <6){
+					echo 'checked="checked"';
+				}
+				echo ' name="list_compare[]" type="checkbox" value="'.$row['id'].'" >Click to Select</label>
                 </td>';
                 echo '</tr>';
+				$i++;
               }
               ?>      
             </tbody>
@@ -65,7 +71,7 @@
 						$(this).prop('checked', false)
 						alert("allowed only 10 items");
 				   }else if ($('input[type=checkbox]:checked').length < 5) {
-						$(this).prop('checked', false)
+						$(this).prop('checked', true)
 						alert("allowed only 5 items");
 				   }
 				})
