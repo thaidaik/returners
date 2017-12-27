@@ -56,6 +56,7 @@ $route['admin/products/delete/(:any)'] = 'admin_products/delete/$1';
 $route['admin/products/(:any)'] = 'admin_products/index/$1'; //$1 = page number
 
 $route['admin/compare'] = 'admin_characters/compare';
+$route['admin/list_compare'] = 'admin_characters/list_compare';
 $route['admin/characters'] = 'admin_characters/index';
 $route['admin/characters/add'] = 'admin_characters/add';
 $route['admin/characters/update'] = 'admin_characters/update';
