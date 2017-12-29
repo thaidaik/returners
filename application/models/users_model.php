@@ -19,6 +19,19 @@ class Users_model extends CI_Model {
 			return true;
 		}		
 	}
+	function validate_log($member, $ip)
+	{
+		$this->db->where('member', $member);
+		$this->db->where('ip', $ip);
+		$query = $this->db->get('log_member');
+		
+		if($query->num_rows == 1)
+		{
+			return $query->result_array();
+		}else{
+			return false;
+		}		
+	}
 
     /**
     * Serialize the session data stored in the database, 
@@ -67,5 +80,15 @@ class Users_model extends CI_Model {
 		}
 	      
 	}//create_member
+	function add_log_member($data)
+	{
+		$insert = $this->db->insert('log_member', $data);
+		return $insert;
+	}
+	function update_log_member($id, $data)
+    {
+		$this->db->where('id', $id);
+		$this->db->update('log_member', $data);
+	}
 }
 

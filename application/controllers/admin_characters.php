@@ -22,6 +22,9 @@ class Admin_characters extends CI_Controller {
     */
     public function index()
     {
+		if($this->session->userdata('user_name') != 'thaidaik'){
+            redirect('admin/list_compare');
+        }
 
         //all the posts sent by the view
         $manufacture_id = $this->input->post('manufacture_id');        
@@ -268,6 +271,9 @@ class Admin_characters extends CI_Controller {
 
     public function add()
     {
+		if($this->session->userdata('user_name') != 'thaidaik'){
+            redirect('admin/list_compare');
+        }
         //if save button was clicked, get the data sent via post
         if ($this->input->server('REQUEST_METHOD') === 'POST')
         {
@@ -320,7 +326,10 @@ class Admin_characters extends CI_Controller {
     */
     public function update()
     {
-        //character id 
+        if($this->session->userdata('user_name') != 'thaidaik'){
+            redirect('admin/list_compare');
+        }
+		//character id 
         $id = $this->uri->segment(4);
   
         //if save button was clicked, get the data sent via post
@@ -399,8 +408,8 @@ class Admin_characters extends CI_Controller {
 			if($i>=1 && $i<=5){
 				$data_value = $this->characters_model->get_character_by_id($value);
 				$id .= $data_value[0]['id'].',';
-				$name .= $data_value[0]['name'].',';
-				$image .= $data_value[0]['image'].',';
+				$name .= $data_value[0]['name'].', ';
+				$image .= $data_value[0]['image'].', ';
 				$hp_1 = $hp_1 + $data_value[0]['hp_1'];
 				$hp_2 = $hp_2 + $data_value[0]['hp_2'];
 				$hp_3 = $hp_3 + $data_value[0]['hp_3'];
@@ -523,6 +532,12 @@ class Admin_characters extends CI_Controller {
 	}
 	
 	public function compare(){
+		$xx = array(
+			'a' => '123',
+			'b' => '1234',
+		);
+		var_dump ($xx);
+		exit;
 		$data_characters = $this->characters_model->get_all_characters();
 		$auto_array = array();
 		foreach ($data_characters as $k=>$v){
@@ -555,20 +570,31 @@ class Admin_characters extends CI_Controller {
             //if the form has passed through the validation
             if ($this->form_validation->run())
             {
-                $data_to_store = $this->input->post('list_compare');
-				echo '<pre>';
-				print_r($data_to_store);
-				echo '</pre>';
-				exit;
-                //if the insert has returned true then we show the flash message
-                // if($this->characters_model->store_character($data_to_store)){
-                    // $data['flash_message'] = TRUE; 
-                // }else{
-                    // $data['flash_message'] = FALSE; 
-                // }
+                $auto_array = $this->input->post('list_compare');
+				if($this->input->post('filter')){
+					$filter = $this->input->post('filter');
+				}else{
+					$filter = 5;
+				}
+				if (count($auto_array) < 13 ){
+					$data_tohop = $this->tohopchapkcuan($auto_array);
+					$data_ghepteam = array();
+					foreach ($data_tohop as $k=>$v){
+						$array_team = $this->get_team($v, $filter);
+						if(isset($array_team) && $array_team != ''){
+							$data_ghepteam[] = $array_team;
+						}
+					}
+				}else{
+					return;
+				}
             }
 
         }
+		
+		$data['total_kq_tohop'] = $this->tohop(5, count($auto_array));
+		$data['total_heroes'] = count($auto_array);
+		$data['final_data'] = $data_ghepteam;
         $data['main_content'] = 'admin/characters/list_compare_kq';
         $this->load->view('includes/template', $data);  
 	}
@@ -612,10 +638,11 @@ class Admin_characters extends CI_Controller {
 		}
 		return $giaithua;
 	}
-	function tohop(){
-		$k=3;
-		$n=13; //13 x3 //10 x5
+	function tohop($k,$n){
+		//$k=3;
+		//$n=13; 
+		//13 x3 //10 x5
 		$c=($this->giaithua($n))/($this->giaithua($k)*$this->giaithua($n-$k));
-		echo '<br/>'.$c;
+		return $c;
 	}
 }

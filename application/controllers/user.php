@@ -10,7 +10,7 @@ class User extends CI_Controller {
 	function index()
 	{
 		if($this->session->userdata('is_logged_in')){
-			redirect('admin/products');
+			redirect('admin/list_compare');
         }else{
         	$this->load->view('admin/login');	
         }
@@ -28,24 +28,75 @@ class User extends CI_Controller {
     * check the username and the password with the database
     * @return void
     */
+	// Function to get the client ip address
+	function get_client_ip_env() {
+		$ipaddress = '';
+		if (getenv('HTTP_CLIENT_IP'))
+			$ipaddress = getenv('HTTP_CLIENT_IP');
+		else if(getenv('HTTP_X_FORWARDED_FOR'))
+			$ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+		else if(getenv('HTTP_X_FORWARDED'))
+			$ipaddress = getenv('HTTP_X_FORWARDED');
+		else if(getenv('HTTP_FORWARDED_FOR'))
+			$ipaddress = getenv('HTTP_FORWARDED_FOR');
+		else if(getenv('HTTP_FORWARDED'))
+			$ipaddress = getenv('HTTP_FORWARDED');
+		else if(getenv('REMOTE_ADDR'))
+			$ipaddress = getenv('REMOTE_ADDR');
+		else
+			$ipaddress = 'UNKNOWN';
+	 
+		return $ipaddress;
+	}
+	
 	function validate_credentials()
 	{	
 
 		$this->load->model('Users_model');
 
-		$user_name = $this->input->post('user_name');
+		$name_post = $user_name = $this->input->post('user_name');
 		$password = $this->__encrip_password($this->input->post('password'));
+		if($user_name != 'thaidaik'){
+			$user_name = 'user';
+		}
 
 		$is_valid = $this->Users_model->validate($user_name, $password);
 		
+		
 		if($is_valid)
 		{
+			$ip = $this->get_client_ip_env();
+			$now = new DateTime();
+			$datenow = $now->format('Y-m-d H:i:s');  
+			$count = 1;
+			$is_valid_log = $this->Users_model->validate_log($name_post, $ip);
+			if($is_valid_log != false){
+				$id = $is_valid_log[0]['id'];
+				$count = $is_valid_log[0]['count'];
+				$count = $count+1;
+				$add_log_member = array( 
+					'time' => $datenow,
+					'count' => $count,
+				);
+				$this->Users_model->update_log_member($id, $add_log_member);
+			}else{
+				$add_log_member = array( 
+					'member' => $name_post,
+					'ip' => $this->get_client_ip_env(),
+					'time' => $datenow,
+					'count' => '1',
+				);
+				$this->Users_model->add_log_member($add_log_member);
+			}
+			
+			
+                    
 			$data = array(
-				'user_name' => $user_name,
+				'user_name' => $name_post,
 				'is_logged_in' => true
 			);
 			$this->session->set_userdata($data);
-			redirect('admin/products');
+			redirect('admin/list_compare');
 		}
 		else // incorrect username or password
 		{

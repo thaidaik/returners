@@ -59,7 +59,7 @@ class Characters_model extends CI_Model {
 		if($order){
 			$this->db->order_by($order, $order_type);
 		}else{
-		    $this->db->order_by('name', $order_type);
+		    $this->db->order_by('info', $order_type);
 		}
 		$this->db->limit($limit_start, $limit_end);
 		//$this->db->limit('4', '4');
